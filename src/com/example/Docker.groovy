@@ -15,14 +15,14 @@ class Docker implements Serializable {
         }
 
     def dockerLogin() {
-        script.sh "Docker login in shared lib"
+        script.echo "Docker login in shared lib"
         script.withCredentials([script.usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
             script.sh "echo '${script.PASS}' | podman-remote login -u '${script.USER}' docker.io --password-stdin"
         }
     }
 
     def dockerPush(String imageName) {
-        script.sh 'Pushing image to docker repo from sharedlib'
+        script.echo 'Pushing image to docker repo from sharedlib'
         def newImage= "docker.io/sushantsaini29/${imageName}"
         script.sh "podman-remote tag localhost/${imageName} ${newImage}"
         script.sh "podman-remote push ${newImage} --tls-verify=false"
