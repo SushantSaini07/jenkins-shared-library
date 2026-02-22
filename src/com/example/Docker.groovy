@@ -17,7 +17,7 @@ class Docker implements Serializable {
     def dockerLogin() {
         script.sh "Docker login in shared lib"
         script.withCredentials([script.usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-            script.sh "echo '${script.PASS}' | podman-remote login -u '${script.USER}' --password-stdin"
+            script.sh "echo '${script.PASS}' | podman-remote login -u '${script.USER}' docker.io --password-stdin"
         }
     }
 
